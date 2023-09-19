@@ -1,5 +1,7 @@
 # Tomographic-RCNN
-Code inspired by: https://github.com/johschmidt42/PyTorch-Object-Detection-Faster-RCNN-Tutorial/tree/master/src
+
+R-CNN inspired by: https://github.com/johschmidt42/PyTorch-Object-Detection-Faster-RCNN-Tutorial/tree/master/src
+
 ---
 ## Exigence
 This project aims to identify 3D bounding boxes for lesions in CT sinogram data, where the buonding box coordinates
@@ -15,5 +17,12 @@ which is a yet unexplored technique.
 ---
 ## Outline
 ### 1. 2D Lesion Detection in CT Image Slices
+- Using DeepLesion Dataset (https://nihcc.app.box.com/v/DeepLesion/folder/50715173939)
+- Standard pytorch faster R-CNN model to identify lesions in 2d image slices with >90% accuracy and less than human-noticeable error in the bounding box.
+  - Currently achieving net loss of 0.8142
+    - TBD: Hyperparameter optimization
+  - Bounding box error currently innoticeable
 ### 2. Deep Learning Reconstruction for Forward Projection and Back Projection
-### 3. 3d Lesion Detection in Sinogram Space
+- Using LoDoPaB-CT dataset (https://zenodo.org/record/3384092)
+### 3. 3D Lesion Detection in Sinogram Space
+- TBD
