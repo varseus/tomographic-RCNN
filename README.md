@@ -17,12 +17,13 @@ which is a yet unexplored technique.
 ---
 ## Outline
 ### 1. 2D Lesion Detection in CT Image Slices
-- Using DeepLesion Dataset (https://nihcc.app.box.com/v/DeepLesion/folder/50715173939)
+- DeepLesion Dataset (https://nihcc.app.box.com/v/DeepLesion/folder/50715173939)
 - Standard pytorch faster R-CNN model to identify lesions in 2d image slices with >90% accuracy and less than human-noticeable error in the bounding box.
   - Currently achieving net loss of 0.8142
     - TBD: Hyperparameter optimization
   - Bounding box error currently innoticeable
 ### 2. Deep Learning Reconstruction for Forward Projection and Back Projection
-- Using LoDoPaB-CT dataset (https://zenodo.org/record/3384092)
+- LoDoPaB-CT dataset (https://zenodo.org/record/3384092)
+- https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9225884/
 ### 3. 3D Lesion Detection in Sinogram Space
-- TBD
+- Standard pytorch faster R-CNN model to identify lesions in sinograms with >90% accuracy and less than human-noticeable error in the 3D bounding box.
