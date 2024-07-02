@@ -22,7 +22,7 @@ which is a yet unexplored technique.
   - Currently achieving net loss of 0.8142
     - TBD: Hyperparameter optimization
   - Bounding box error currently innoticeable
-### 2. Deep Learning Reconstruction for Forward Projection and Back Projection
+### 2. Reconstruction for Forward Projection and Back Projection
 - LoDoPaB-CT dataset (https://zenodo.org/record/3384092)
 - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9225884/
 ### 3. 3D Lesion Detection in Sinogram Space
