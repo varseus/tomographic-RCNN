@@ -18,7 +18,7 @@ which is a yet unexplored technique.
 ## Outline
 ### 1. 2D Lesion Detection in CT Image Slices
 - DeepLesion Dataset (https://nihcc.app.box.com/v/DeepLesion/folder/50715173939)
-- Standard PyTorch faster R-CNN model to identify lesions in 2d image slices with >90% accuracy and less than human-noticeable error in the bounding box
+- Standard PyTorch faster R-CNN model to identify lesions in 2d image slices
   - Currently achieving net loss of 0.8142
     - TBD: Hyperparameter optimization
   - Bounding box error currently innoticeable
