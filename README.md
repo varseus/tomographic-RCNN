@@ -26,5 +26,5 @@ which is a yet unexplored technique.
 - LoDoPaB-CT dataset (https://zenodo.org/record/3384092)
 - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9225884/
 ### 3. 3D Lesion Detection in Sinogram Space
-- Faster R-CNN model to identify lesions in sinograms with >90% accuracy and less than human-noticeable error in the 3D bounding box
-- Extend PyTorch's 2d Faster R-CNN to accept 3D bounding boxes
+- Faster R-CNN model to identify lesions in sinograms 
+- Extend PyTorch's 2d Faster R-CNN to accept 3D bounding boxes / work in sinogram space.
