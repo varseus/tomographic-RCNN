@@ -1,7 +1,7 @@
 import torch
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
-from data import CTDataset
+from ctdataset import CTDataset
 from utils import *
 
 import math
@@ -9,7 +9,10 @@ import sys
 
 from torchvision.transforms.functional import pil_to_tensor
 
-def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, scaler=None):
+
+def train_one_epoch(
+    model, optimizer, data_loader, device, epoch, print_freq, scaler=None
+):
     model.train()
     metric_logger = MetricLogger(delimiter="  ")
     metric_logger.add_meter("lr", SmoothedValue(window_size=1, format="{value:.6f}"))
@@ -27,7 +30,13 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, sc
 
     for images, targets in metric_logger.log_every(data_loader, print_freq, header):
         images = list(image.to(device) for image in images)
-        targets = [{k: v.to(device) if isinstance(v, torch.Tensor) else v for k, v in t.items()} for t in targets]
+        targets = [
+            {
+                k: v.to(device) if isinstance(v, torch.Tensor) else v
+                for k, v in t.items()
+            }
+            for t in targets
+        ]
         with torch.cuda.amp.autocast(enabled=scaler is not None):
             loss_dict = model(images, targets)
             losses = sum(loss for loss in loss_dict.values())
@@ -60,17 +69,24 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, sc
 
     return metric_logger
 
+
 def transform_pil_to_image(image, target):
     return pil_to_tensor(image), target
 
+
 if __name__ == "__main__":
     # use metal
-    device = torch.device('mps') if torch.has_mps else torch.device('cpu')
+    device = torch.device(
+        "cpu"
+    )  # torch.device('mps') if torch.backends.mps.is_built() else ### Metal causes issues with batch size?
 
     dataset = CTDataset(transform_pil_to_image)
-    indices = torch.arange(0, len(dataset)).tolist() # do I need to make a tensor before a list?
+    indices = torch.arange(
+        0, len(dataset)
+    ).tolist()  # do I need to make a tensor before a list?
     data_loader = torch.utils.data.DataLoader(
-        dataset, batch_size=5, shuffle=True, num_workers=4,collate_fn=collate_fn)
+        dataset, batch_size=5, shuffle=True, num_workers=4, collate_fn=collate_fn
+    )
 
     # load pretrained FasterRCNN model
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights="DEFAULT")
@@ -83,17 +99,15 @@ if __name__ == "__main__":
 
     # stochastic gradient descent with momentum
     params = [p for p in model.parameters() if p.requires_grad]
-    optimizer = torch.optim.SGD(
-        params, lr=0.005,momentum=0.1, weight_decay=0.0005)
+    optimizer = torch.optim.SGD(params, lr=0.01, momentum=0.05, weight_decay=0.005)
     # decay the lr every step_size epochs
-    lr_scheduler = torch.optim.lr_scheduler.StepLR(
-        optimizer, step_size=1, gamma=0.5)
-    
+    lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.5)
+
     num_epochs = 10
     for epoch in range(num_epochs):
         # train for one epoch, printing every 10 iterations
-        train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq=10)
+        train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq=1)
         # update the learning rate
         lr_scheduler.step()
 
-    torch.save(model.state_dict(), "./model_state_dict.pt")
+    torch.save(model.state_dict(), "../res/model_state")
